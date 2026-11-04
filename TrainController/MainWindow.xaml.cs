@@ -20,5 +20,19 @@ namespace TrainController
         {
             InitializeComponent();
         }
+
+        private void OpenFile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SaveFile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

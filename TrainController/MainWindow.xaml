@@ -7,17 +7,26 @@
         xmlns:models="clr-namespace:TrainController.Models"
         mc:Ignorable="d"
         Title="Train Controller" Height="450" Width="800"
+        DataContext="models.MainViewModel"
         >
-    <Grid x:Name="MainGrid" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Margin="0,0,10,6" RenderTransformOrigin="0.5,0.5">
-        <Menu Background="DarkBlue" Height="23" VerticalAlignment="Top">
-            <MenuItem Header="_File" Foreground="Yellow">
-                <MenuItem Header="_Open" Click="OpenFile_Click" Foreground="Black"/>
+
+    <Window.Resources>
+        <Style x:Key="MenuStyle" TargetType="Menu">
+            <Setter Property="Foreground" Value="Yellow"/>
+            <Setter Property="Background" Value="DarkBlue"/>
+        </Style>
+    </Window.Resources>
+        <Grid x:Name="MainGrid" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Margin="0,0,10,6" RenderTransformOrigin="0.5,0.5">
+        <Menu Style="{StaticResource MenuStyle}" Height="23" VerticalAlignment="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open" Click="OpenFile_Click" Foreground="Black" />
                 <MenuItem Header="_Save" Click="SaveFile_Click" Foreground="Black"/>
                 <Separator/>
                 <MenuItem Header="_Exit" Click="Exit_Click" Foreground="Black"/>
             </MenuItem>
-            <MenuItem Header="Ebenen" Foreground="Yellow" >
-                <MenuItem Header="Raster Anzeigen" Click="ShowLayer_Click" Foreground="Black" IsCheckable="True"/>
+            <MenuItem Header="Ebenen">
+                <MenuItem Header="Raster Anzeigen" Click="ShowLayer_Click" Foreground="Black" IsCheckable="True" 
+                          IsChecked="{Binding ShowRaster, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </MenuItem>
         </Menu>
 

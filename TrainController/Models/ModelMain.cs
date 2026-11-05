@@ -26,6 +26,17 @@ namespace TrainController.Models
         }
         private int _rasterSize = 64;
 
+        public bool ShowLayer {
+            get => _showLayer;
+            set             
+            {
+                _showLayer = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShowLayer)));
+            }
+        }
+
+        private bool _showLayer = true;
+
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

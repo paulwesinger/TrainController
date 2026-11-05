@@ -4,18 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TrainController"
+        xmlns:models="clr-namespace:TrainController.Models"
         mc:Ignorable="d"
-        Title="Trein Controller" Height="450" Width="800">
-    <Grid x:Name="MainGrid" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Margin="0,0,10,34" RenderTransformOrigin="0.5,0.5">
-       <Menu>
-            <MenuItem Header="_File">
-                <MenuItem Header="_Open" Click="OpenFile_Click"/>
-                <MenuItem Header="_Save" Click="SaveFile_Click"/>
+        Title="Train Controller" Height="450" Width="800"
+        >
+    <Grid x:Name="MainGrid" Background="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}" Margin="0,0,10,6" RenderTransformOrigin="0.5,0.5">
+        <Menu Background="DarkBlue" Height="23" VerticalAlignment="Top">
+            <MenuItem Header="_File" Foreground="Yellow">
+                <MenuItem Header="_Open" Click="OpenFile_Click" Foreground="Black"/>
+                <MenuItem Header="_Save" Click="SaveFile_Click" Foreground="Black"/>
                 <Separator/>
-                <MenuItem Header="_Exit" Click="Exit_Click"/>
+                <MenuItem Header="_Exit" Click="Exit_Click" Foreground="Black"/>
+            </MenuItem>
+            <MenuItem Header="Ebenen" Foreground="Yellow" >
+                <MenuItem Header="Raster Anzeigen" Click="ShowLayer_Click" Foreground="Black" IsCheckable="True"/>
             </MenuItem>
         </Menu>
- 
+
 
     </Grid>
 </Window>

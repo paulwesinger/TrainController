@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TrainController.Models;
 
 namespace TrainController
 {
@@ -16,6 +17,8 @@ namespace TrainController
     /// </summary>
     public partial class MainWindow : Window
     {
+        public ModelMain modelMain = new ModelMain();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -33,6 +36,11 @@ namespace TrainController
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void ShowLayer_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

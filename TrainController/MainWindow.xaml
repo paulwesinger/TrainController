@@ -39,7 +39,7 @@
             </MenuItem>            
         </Menu>
 
-        <UserControl x:Name="usercontrl">
+        <UserControl x:Name="usercontrl" Margin="0,28,0,0">
             
         </UserControl>   
     </Grid>

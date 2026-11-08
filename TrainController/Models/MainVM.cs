@@ -53,14 +53,7 @@ namespace TrainController.Models
         bool _newProjectStarted = false;
 
         public bool EnableControls
-        {/*
-            get => (bool)GetValue(EnableControlProperty);
-            set
-            {
-                SetValue(EnableControlProperty, value);
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EnableControls)));
-            }
-            */
+        {
             get => _EnableControls;
             set
             {

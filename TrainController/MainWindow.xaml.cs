@@ -70,6 +70,16 @@ namespace TrainController
         private void ShowLayer_Click(object sender, RoutedEventArgs e)
         {  
             modelMain.ShowLayer = this.ItemRaster.IsChecked ;
+
+            if (projectEditor != null)
+            {
+                Models.ProjectWinVM vm = projectEditor.DataContext as ProjectWinVM;
+
+                projectEditor.DrawRaster(modelMain.ShowLayer);
+            }
+            
+
+
         }
 
         private void NewProject_Click(object sender, RoutedEventArgs e)
@@ -89,9 +99,8 @@ namespace TrainController
                 //projectWindow.Show();
 
                 projectEditor = new ProjectEditor();
+                projectEditor.DrawRaster(true);
                 usercontrl.Content = projectEditor;
-
-
             }
             else
             {

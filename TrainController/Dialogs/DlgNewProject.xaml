@@ -1,0 +1,26 @@
+﻿<Window x:Class="TrainController.Dialogs.DlgNewProject"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TrainController.Dialogs"
+        mc:Ignorable="d"
+        Title="Neues Projekt" Height="350" Width="500"
+        WindowStartupLocation="CenterOwner"
+        Background="DarkGray">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="233*"/>
+            <ColumnDefinition Width="267*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="381*"/>
+            <RowDefinition Height="53*"/>
+        </Grid.RowDefinitions>
+        <Button Content="Anlegen" x:Name="btnCreateProject" HorizontalAlignment="Left" Margin="124,7,0,0" Grid.Row="1" VerticalAlignment="Top" Click="btnCreateProject_Click" Width="66" Height="20" />
+        <Button Content="Abbrechen" x:Name="btnCancel" Margin="0,12,39,0" Grid.Row="1" VerticalAlignment="Top" Click="btnCancel_Click" Grid.Column="1" Height="20" HorizontalAlignment="Right" Width="62"/>
+        <TextBox HorizontalAlignment="Left" Margin="41,88,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="171" Grid.Column="1" Height="18"/>
+        <Label Content="Projekt Name" HorizontalAlignment="Left" Margin="146,84,0,0" VerticalAlignment="Top" Width="87"/>
+
+    </Grid>
+</Window>

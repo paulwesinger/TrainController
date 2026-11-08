@@ -10,6 +10,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TrainController.Models;
+using TrainController.Dialogs;
+using TrainController.ProjectWindow;
 
 namespace TrainController
 {
@@ -19,7 +21,8 @@ namespace TrainController
     public partial class MainWindow : Window
     {
         public MainVM modelMain = new MainVM();
-
+        public ProjectWindow.ProjectWindow? projectWindow = null;
+        public ProjectEditor? projectEditor = null;
 
 
 
@@ -28,17 +31,24 @@ namespace TrainController
         public MainWindow()
         {
             InitializeComponent();
-            modelMain.PropertyChanged += ModelMain_PropertyChanged ;
-            
+            modelMain.PropertyChanged += ModelMain_PropertyChanged ;            
         }
 
 
 
         private void ModelMain_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(modelMain.ShowLayer))
+            if (e.PropertyName == nameof(modelMain.EnableControls))
             {
-                MessageBox.Show("Showlayer " + modelMain.ShowLayer.ToString());
+                if (modelMain.NewProjectStarted)
+                {
+                    this.ItemRaster.IsEnabled = true;
+                }
+                else
+                {
+                    this.ItemRaster.IsEnabled = false;
+                }               
+
                 modelMain.DrawGrid();
             }
         }
@@ -60,6 +70,33 @@ namespace TrainController
         private void ShowLayer_Click(object sender, RoutedEventArgs e)
         {  
             modelMain.ShowLayer = this.ItemRaster.IsChecked ;
+        }
+
+        private void NewProject_Click(object sender, RoutedEventArgs e)
+        {
+            DlgNewProject dlgNewProject = new DlgNewProject();
+            dlgNewProject.Owner = this;
+            dlgNewProject.ShowDialog();
+
+            if (dlgNewProject.DialogResult == true)
+            {
+                modelMain.NewProjectStarted = true;
+                modelMain.EnableControls = true;
+
+                //projectWindow = new ProjectWindow.ProjectWindow();
+                //projectWindow.Owner = this;
+                
+                //projectWindow.Show();
+
+                projectEditor = new ProjectEditor();
+                usercontrl.Content = projectEditor;
+
+
+            }
+            else
+            {
+                modelMain.EnableControls = false;
+            }
         }
     }
 }

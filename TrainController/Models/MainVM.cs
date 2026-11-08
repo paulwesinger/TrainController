@@ -8,8 +8,10 @@ using System.Windows;
 
 namespace TrainController.Models
 {
-    public class MainVM : INotifyPropertyChanged
+    public class MainVM : DependencyObject,INotifyPropertyChanged
     {
+        public static readonly DependencyProperty ShowLayerProperty = DependencyProperty.Register(
+            nameof(ShowLayer), typeof(bool), typeof(MainVM), new PropertyMetadata());
         public int RasterSize { 
             get => _rasterSize;
             set
@@ -28,18 +30,49 @@ namespace TrainController.Models
         private int _rasterSize = 64;
 
         public bool ShowLayer {
-            get => _showLayer;
+            get => (bool)GetValue(ShowLayerProperty);
             set             
             {
-                _showLayer = value;
+                SetValue(ShowLayerProperty, value);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShowLayer)));
             }
         }
-
         private bool _showLayer = true;
 
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public bool NewProjectStarted
+        {
+            get => _newProjectStarted;
+            set
+            {
+                if (_newProjectStarted == value) return;
+                _newProjectStarted = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(NewProjectStarted)));
+            }
+        }
+        bool _newProjectStarted = false;
+
+        public bool EnableControls
+        {/*
+            get => (bool)GetValue(EnableControlProperty);
+            set
+            {
+                SetValue(EnableControlProperty, value);
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EnableControls)));
+            }
+            */
+            get => _EnableControls;
+            set
+            {
+                if (_EnableControls == value) return;
+                _EnableControls = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EnableControls)));
+
+            }
+        }
+        private bool _EnableControls = false;
+
+        public event PropertyChangedEventHandler? PropertyChanged;       
 
         public void DrawGrid()
         {

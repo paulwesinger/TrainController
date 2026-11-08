@@ -31,7 +31,8 @@ namespace TrainController
         public MainWindow()
         {
             InitializeComponent();
-            modelMain.PropertyChanged += ModelMain_PropertyChanged ;            
+            modelMain.PropertyChanged += ModelMain_PropertyChanged ;   
+            this.DataContext = modelMain;
         }
 
 
@@ -91,12 +92,8 @@ namespace TrainController
             if (dlgNewProject.DialogResult == true)
             {
                 modelMain.NewProjectStarted = true;
-                modelMain.EnableControls = true;
+                modelMain.EnableControls = true;                
 
-                //projectWindow = new ProjectWindow.ProjectWindow();
-                //projectWindow.Owner = this;
-                
-                //projectWindow.Show();
 
                 projectEditor = new ProjectEditor();
                 projectEditor.DrawRaster(true);

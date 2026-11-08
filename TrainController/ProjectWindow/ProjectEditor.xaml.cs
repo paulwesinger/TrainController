@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TrainController.Dialogs;
 using TrainController.Models;
 
 namespace TrainController.ProjectWindow
@@ -21,19 +22,21 @@ namespace TrainController.ProjectWindow
     /// </summary>
     public partial class ProjectEditor : UserControl
     {
-        public ProjectWinVM modelProject = new ProjectWinVM();
+        public ProjectWinVM modelProject = new ProjectWinVM();        
+
         Canvas canvas;
         public ProjectEditor()
-        {
+        { 
+            DataContext= modelProject;
             InitializeComponent();
             canvas = mycanvas;
-            DataContext= modelProject;
+           
         }
 
         public void DrawRaster(bool drawraster)
         {
             if (drawraster)
-                canvas.Background = modelProject.CreateDotGridBrush(64.0, 3, Brushes.Gray);
+                canvas.Background = modelProject.CreateDotGridBrush(20.0, 2, Brushes.Gray);
             else
                 canvas.Background = Brushes.Transparent;
         }

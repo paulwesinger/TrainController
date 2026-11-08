@@ -4,9 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TrainController"
-        xmlns:models="clr-namespace:TrainController.Models"
-        d:DataContext="{d:DesignInstance Type=models:ModelMain}"
-        mc:Ignorable="d"
+        xmlns:models="clr-namespace:TrainController.Models"       
+        
         Title="Train Controller" Height="450" Width="800"
         DataContext=""
         >
@@ -26,8 +25,9 @@
                 <MenuItem Header="_Exit" Click="Exit_Click" Foreground="Black"/>
             </MenuItem>
             <MenuItem Header="Ebenen">
-                <MenuItem Header="Raster Anzeigen" Click="ShowLayer_Click" Foreground="Black" IsCheckable="True" 
-                          IsChecked="{Binding ShowRaster, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <MenuItem Header="Raster Anzeigen" Click="ShowLayer_Click" Foreground="Black" IsCheckable="True"
+                          x:Name="ItemRaster"
+                          IsChecked="{Binding ShowLayer, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
             </MenuItem>
         </Menu>
 

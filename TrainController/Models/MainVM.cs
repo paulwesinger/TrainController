@@ -4,10 +4,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace TrainController.Models
 {
-    public class ModelMain : INotifyPropertyChanged
+    public class MainVM : INotifyPropertyChanged
     {
         public int RasterSize { 
             get => _rasterSize;
@@ -46,9 +47,10 @@ namespace TrainController.Models
 
         }
 
-        public ModelMain()
+
+        public MainVM()
         {
-            // Constructor logic here
+            
         }
 
 

@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.ComponentModel;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -17,11 +18,28 @@ namespace TrainController
     /// </summary>
     public partial class MainWindow : Window
     {
-        public ModelMain modelMain = new ModelMain();
+        public MainVM modelMain = new MainVM();
+
+
+
+
+
 
         public MainWindow()
         {
             InitializeComponent();
+            modelMain.PropertyChanged += ModelMain_PropertyChanged ;
+            
+        }
+
+
+
+        private void ModelMain_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(modelMain.ShowLayer))
+            {
+                MessageBox.Show("Showlayer " + modelMain.ShowLayer.ToString());
+            }
         }
 
         private void OpenFile_Click(object sender, RoutedEventArgs e)
@@ -39,8 +57,8 @@ namespace TrainController
         }
 
         private void ShowLayer_Click(object sender, RoutedEventArgs e)
-        {
-
+        {  
+            modelMain.ShowLayer = this.ItemRaster.IsChecked ;
         }
     }
 }

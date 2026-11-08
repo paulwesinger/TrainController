@@ -7,9 +7,11 @@
         xmlns:models="clr-namespace:TrainController.Models"       
         
         Title="Train Controller" Height="450" Width="800"
-        DataContext=""
+        
         >
-
+    <Window.DataContext>
+        <models:MainVM/>
+    </Window.DataContext>
     <Window.Resources>
         <Style x:Key="MenuStyle" TargetType="Menu">
             <Setter Property="Foreground" Value="Yellow"/>

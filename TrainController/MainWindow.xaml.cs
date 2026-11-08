@@ -39,6 +39,7 @@ namespace TrainController
             if (e.PropertyName == nameof(modelMain.ShowLayer))
             {
                 MessageBox.Show("Showlayer " + modelMain.ShowLayer.ToString());
+                modelMain.DrawGrid();
             }
         }
 

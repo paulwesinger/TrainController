@@ -81,16 +81,29 @@ namespace TrainController.ProjectWindow
             if (e.Data.GetDataPresent(DataFormats.StringFormat) && e.Data.GetDataPresent("Width") && e.Data.GetDataPresent("Object"))
             {
                // string fillColorString = (string)e.Data.GetData(DataFormats.StringFormat);
-                double width = (double)e.Data.GetData("Width");
+                //double width = (double)e.Data.GetData("Width");
                 UserControl droppedControl = (UserControl)e.Data.GetData("Object");
+                UserControlsVM model; //= e.Data.GetData("Vm") as SchieneGerade;
                 // Erstellen Sie eine neue Instanz des UserControls
                 UserControl? newControl = null;
+  
+
                 if (droppedControl is SchieneGerade)
                 {
                     newControl = new SchieneGerade();
+
+                    model = (droppedControl as SchieneGerade).CtlModel;
+
+
+                    model.Editing = true;
+
+                    ((SchieneGerade)newControl).CtlModel = model;
+
+
+
                     //((SchieneGerade)newControl).Schiene_Gerade.Fill = Brushes.AliceBlue; //(Brush)new BrushConverter().ConvertFromString(fillColorString);
-               //     ((SchieneGerade)newControl).Schiene_Gerade.Width = 64;
-                   
+                    // ((SchieneGerade)newControl).Schiene_Gerade.Width = 60;       
+
                 }
                 //else if (droppedControl is SchieneKurve)
                 //{
@@ -100,20 +113,14 @@ namespace TrainController.ProjectWindow
                 //}
                 if (newControl != null)
                 {
-
-
                     // Setzen Sie die Position des neuen Controls auf die Drop-Position
-                    Point dropPosition = e.GetPosition(canvas);
+                    Point dropPosition = e.GetPosition(canvas);  
+
                     if (_snapToGrid)
                     {
-
-
                         dropPosition.X = Math.Round(dropPosition.X / modelProject.Spacing) * modelProject.Spacing;
                         dropPosition.Y = Math.Round(dropPosition.Y / modelProject.Spacing) * modelProject.Spacing;
-
-                    }
-
-                    
+                    }                  
                     Canvas.SetLeft(newControl, dropPosition.X);
                     Canvas.SetTop(newControl, dropPosition.Y);
                     // Fügen Sie das neue Control zum Canvas hinzu
@@ -136,7 +143,8 @@ namespace TrainController.ProjectWindow
                 {
                     // Flag für Bearbeitung eines UI Elements setzensetzen
                     // ToDo: UIElement mit Punkten zum transformieren versehen
-                    modelProject.EditMode = true;                    
+                    modelProject.EditMode = true;
+                    item.CtlModel.Editing = true;
                 }
             }
 

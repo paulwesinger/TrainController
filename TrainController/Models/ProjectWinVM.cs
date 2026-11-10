@@ -14,7 +14,7 @@ namespace TrainController.Models
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public double Spacing { get; set; } = 16.0;
+        public double Spacing { get; set; } = 20.0;
 
         public bool ShowRaster
         {

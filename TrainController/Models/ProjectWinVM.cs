@@ -14,6 +14,8 @@ namespace TrainController.Models
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        public double Spacing { get; set; } = 20.0;
+
         public bool ShowRaster
         {
             get => _showRaster;
@@ -28,6 +30,7 @@ namespace TrainController.Models
 
         public DrawingBrush CreateDotGridBrush(double spacing, double dotRadius, Brush dotBrush)
         {
+            Spacing = spacing;
             EllipseGeometry dotGeometry = new EllipseGeometry(new Point(spacing / 2, spacing / 2), dotRadius, dotRadius);
 
             GeometryDrawing geometryDrawing = new GeometryDrawing(dotBrush, null, dotGeometry);
@@ -44,30 +47,6 @@ namespace TrainController.Models
                 Viewport = new Rect(0, 0, spacing, spacing),
                 ViewportUnits = BrushMappingMode.Absolute
             };
-
-            //DrawingGroup drawingGroup = new DrawingGroup();
-
-            //// Unsichtbarer Hintergrund für die Kachelgröße
-            //drawingGroup.Children.Add(new GeometryDrawing(
-            //    Brushes.Transparent,
-            //    null,
-            //    new RectangleGeometry(new Rect(0, 0, spacing, spacing)))
-            //);
-
-            //// Der Punkt
-            //drawingGroup.Children.Add(new GeometryDrawing(
-            //    dotBrush,
-            //    null,
-            //    new EllipseGeometry(new Point(spacing / 2, spacing / 2), dotRadius, dotRadius))
-            //);
-
-            //// Brush zusammenbauen
-            //DrawingBrush brush = new DrawingBrush(drawingGroup)
-            //{
-            //    TileMode = TileMode.Tile,
-            //    Viewport = new Rect(0, 0, spacing, spacing),
-            //    ViewportUnits = BrushMappingMode.Absolute
-            //};
 
             return brush;
         }

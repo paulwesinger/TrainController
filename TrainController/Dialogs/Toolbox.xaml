@@ -4,15 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TrainController.Dialogs"
+        xmlns:userctls="clr-namespace:TrainController.UserControls"
         mc:Ignorable="d"
-        Title="Toolbox" Height="250" Width="80"
+        Title="Toolbox" Height="250" Width="120"
         WindowStyle="ToolWindow"
         >
     <Grid>
         <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-                <Image Source="/Images/tools.png" Width="32" Height="32"/>
-                <Image Source="/Images/tools.png" Width="32" Height="32"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" Width="110">
+                <!--<userctls:SchieneGerade Margin="2"/>
+                <userctls:SchieneGerade Margin="2"/>-->
             </StackPanel>
         </StackPanel>
     </Grid>

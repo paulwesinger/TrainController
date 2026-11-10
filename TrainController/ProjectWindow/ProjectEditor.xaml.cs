@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TrainController.Dialogs;
 using TrainController.Models;
+using TrainController.UserControls;
 
 namespace TrainController.ProjectWindow
 {
@@ -22,16 +23,26 @@ namespace TrainController.ProjectWindow
     /// </summary>
     public partial class ProjectEditor : UserControl
     {
-        public ProjectWinVM modelProject = new ProjectWinVM();        
+        public ProjectWinVM modelProject = new ProjectWinVM();
+
+        public int CountTracks
+        {
+            get => countTracks;
+            set => countTracks = value; 
+        }
+        private int countTracks = 0;
+
+        private bool _snapToGrid = true;
 
         Canvas canvas;
         public ProjectEditor()
         { 
             DataContext= modelProject;
             InitializeComponent();
-            canvas = mycanvas;
-           
+            canvas = mycanvas;           
         }
+
+
 
         public void DrawRaster(bool drawraster)
         {
@@ -39,6 +50,101 @@ namespace TrainController.ProjectWindow
                 canvas.Background = modelProject.CreateDotGridBrush(20.0, 2, Brushes.Gray);
             else
                 canvas.Background = Brushes.Transparent;
+        }
+
+        //protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+        //{
+        //    base.OnPreviewMouseLeftButtonDown(e);
+
+        //    Point p = e.GetPosition(mycanvas);
+
+        //    if (p.X < 0)
+        //    {
+        //        // Drag and Drop
+        //    }
+        //    else
+        //    {
+        //        // Select the child in the ui-tree to transform it
+        //        Type t = e.GetType();
+                
+        //        if (e.GetType() == typeof(SchieneGerade))
+        //        {
+        //            SchieneGerade selectedControl = (SchieneGerade)e.Source;
+        //            // Do something with the selected control
+        //        }
+        //    }
+        //}
+
+        protected override void OnDrop(DragEventArgs e)
+        {
+            base.OnDrop(e);
+            if (e.Data.GetDataPresent(DataFormats.StringFormat) && e.Data.GetDataPresent("Width") && e.Data.GetDataPresent("Object"))
+            {
+               // string fillColorString = (string)e.Data.GetData(DataFormats.StringFormat);
+                double width = (double)e.Data.GetData("Width");
+                UserControl droppedControl = (UserControl)e.Data.GetData("Object");
+                // Erstellen Sie eine neue Instanz des UserControls
+                UserControl? newControl = null;
+                if (droppedControl is SchieneGerade)
+                {
+                    newControl = new SchieneGerade();
+                    //((SchieneGerade)newControl).Schiene_Gerade.Fill = Brushes.AliceBlue; //(Brush)new BrushConverter().ConvertFromString(fillColorString);
+                    ((SchieneGerade)newControl).Schiene_Gerade.Width = 64;
+                   
+                }
+                //else if (droppedControl is SchieneKurve)
+                //{
+                //    newControl = new SchieneKurve();
+                //    ((SchieneKurve)newControl).Schiene_Kurve.Fill = (Brush)new BrushConverter().ConvertFromString(fillColorString);
+                //    ((SchieneKurve)newControl).Schiene_Kurve.Width = width;
+                //}
+                if (newControl != null)
+                {
+
+
+                    // Setzen Sie die Position des neuen Controls auf die Drop-Position
+                    Point dropPosition = e.GetPosition(canvas);
+                    if (_snapToGrid)
+                    {
+
+
+                        dropPosition.X = Math.Round(dropPosition.X / modelProject.Spacing) * modelProject.Spacing;
+                        dropPosition.Y = Math.Round(dropPosition.Y / modelProject.Spacing) * modelProject.Spacing;
+
+                    }
+
+                    
+                    Canvas.SetLeft(newControl, dropPosition.X);
+                    Canvas.SetTop(newControl, dropPosition.Y);
+                    // Fügen Sie das neue Control zum Canvas hinzu
+                    canvas.Children.Add(newControl);
+                    CountTracks++;
+                }
+            }
+        }
+
+        private void mycanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (mycanvas.Children.Count == 0 )
+                return;                     
+
+            //var firstChild = mycanvas.Children[0];
+            var ctl = mycanvas.Children.OfType<SchieneGerade>().ToList();
+            foreach(var item in ctl)
+            {
+                if (item.IsMouseOver)
+                {
+                    // Do something with the item                    
+   
+                    //item.CaptureMouse();
+                }
+            }
+
+        }
+
+        private void mycanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

@@ -47,7 +47,7 @@ namespace TrainController.ProjectWindow
         public void DrawRaster(bool drawraster)
         {
             if (drawraster)
-                canvas.Background = modelProject.CreateDotGridBrush(20.0, 2, Brushes.Gray);
+                canvas.Background = modelProject.CreateDotGridBrush(modelProject.Spacing , 2, Brushes.Gray);
             else
                 canvas.Background = Brushes.Transparent;
         }
@@ -89,7 +89,7 @@ namespace TrainController.ProjectWindow
                 {
                     newControl = new SchieneGerade();
                     //((SchieneGerade)newControl).Schiene_Gerade.Fill = Brushes.AliceBlue; //(Brush)new BrushConverter().ConvertFromString(fillColorString);
-                    ((SchieneGerade)newControl).Schiene_Gerade.Width = 64;
+               //     ((SchieneGerade)newControl).Schiene_Gerade.Width = 64;
                    
                 }
                 //else if (droppedControl is SchieneKurve)
@@ -134,9 +134,9 @@ namespace TrainController.ProjectWindow
             {
                 if (item.IsMouseOver)
                 {
-                    // Do something with the item                    
-   
-                    //item.CaptureMouse();
+                    // Flag für Bearbeitung eines UI Elements setzensetzen
+                    // ToDo: UIElement mit Punkten zum transformieren versehen
+                    modelProject.EditMode = true;                    
                 }
             }
 

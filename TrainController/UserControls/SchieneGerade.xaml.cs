@@ -39,7 +39,7 @@ namespace TrainController.UserControls
 
                 
                 DataObject data = new DataObject();
-                data.SetData(DataFormats.StringFormat,Schiene_Gerade.Source);
+                data.SetData(DataFormats.StringFormat, Schiene_Gerade);
                 data.SetData("Width", Schiene_Gerade.Width);
                 data.SetData("Object", this); // Setzen Sie das UserControl selbst als Datenobjekt
 

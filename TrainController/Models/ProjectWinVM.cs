@@ -14,7 +14,7 @@ namespace TrainController.Models
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public double Spacing { get; set; } = 20.0;
+        public double Spacing { get; set; } = 16.0;
 
         public bool ShowRaster
         {
@@ -27,6 +27,18 @@ namespace TrainController.Models
             }
         }   
         private bool _showRaster = true;
+
+        public bool EditMode
+        {
+            get => _editMode;
+            set
+            {
+                if (value == _editMode) return;
+                _editMode = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(EditMode)));
+            }
+        }
+        private bool _editMode = false;
 
         public DrawingBrush CreateDotGridBrush(double spacing, double dotRadius, Brush dotBrush)
         {

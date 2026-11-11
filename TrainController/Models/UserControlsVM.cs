@@ -4,14 +4,15 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TrainController.UserControls;
 
 namespace TrainController.Models
 {
     public class UserControlsVM : INotifyPropertyChanged
-    {
-        public event PropertyChangedEventHandler? PropertyChanged;
+    { 
 
+        public event PropertyChangedEventHandler? PropertyChanged;
         public bool Editing
         {
             get => _editing;

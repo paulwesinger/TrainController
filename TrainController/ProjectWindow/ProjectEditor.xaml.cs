@@ -133,7 +133,9 @@ namespace TrainController.ProjectWindow
                                         
                     mousegrabber = new MouseGrabber(newControl, model);
 
-                    ((SchieneGerade)newControl).Mousegrabber = mousegrabber;
+                    //((SchieneGerade)newControl).Mousegrabber = mousegrabber;
+                    mousegrabber.ChildCtl = ((SchieneGerade)newControl); 
+
 
                     Canvas.SetLeft(mousegrabber, dropPosition.X);
                     Canvas.SetTop(mousegrabber, dropPosition.Y+5);
@@ -172,7 +174,7 @@ namespace TrainController.ProjectWindow
                     modelProject.EditMode = true;
                     item.ViewModel.Editing = true;
                     item.Width = 100;
-                    item.Mousegrabber.Width = 100;
+                    //item.Child.Width = 100;
                                  
                 }
             }

@@ -19,19 +19,34 @@ namespace TrainController.UserControls
     /// <summary>
     /// Interaktionslogik für MouseGrabber.xaml
     /// </summary>
-    public partial class MouseGrabber : UserControl       
+    public partial class MouseGrabber : UserControl    
     {
+        public static readonly DependencyProperty UserControlsVMProperty = DependencyProperty.Register("UserControlsVM",
+            typeof(UserControlsVM), typeof(MouseGrabber), new PropertyMetadata(null));
+
         UserControlsVM? viewmodel;
+
+        public UserControl ChildCtl
+        {
+            get => childctl;                          
+            set
+            {  
+                if (value == null) return;
+                childctl = value;
+            }            
+        }
+        private UserControl childctl;
 
         public UserControlsVM? Viewmodel
         {
             get 
-            { 
-                return viewmodel; 
+            {
+                return (UserControlsVM)GetValue(UserControlsVMProperty);
+                
             }
             set
             {
-                viewmodel = value;
+                SetValue(UserControlsVMProperty,value);// viewmodel = value;
             }
         }
 
@@ -56,9 +71,10 @@ namespace TrainController.UserControls
             Viewmodel = new UserControlsVM();
             LocationX = 0;
             LocationY = 0;
+            childctl = new UserControl();
         }
 
-        public MouseGrabber(UserControl parent, UserControlsVM? vm)
+        public MouseGrabber(UIElement child, UserControlsVM? vm)
         {
             
             InitializeComponent();
@@ -67,14 +83,15 @@ namespace TrainController.UserControls
             else
                 this.Viewmodel = vm;
 
-            this.Width = parent.Width;
-            this.Height = parent.Height;
+            Type t = child.GetType();       
+            if (t == typeof(SchieneGerade))
+                ChildCtl = child as SchieneGerade;
 
-            var item = parent as SchieneGerade;
             
+            //var item = child  as SchieneGerade;
+            ////ChildCtl = t;
            
-            this.LocationX = Canvas.GetLeft(parent);
-            this.LocationY = Canvas.GetTop(parent);
+          
         }
 
         private void GrabRight_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -97,13 +114,19 @@ namespace TrainController.UserControls
                 //GrabPoint.X += deltaX;
 
                 if (viewmodel != null)
-                    this.viewmodel.CntrlWidth = this.Width;
+                   viewmodel.CntrlWidth = this.Width;
+
+                ChildCtl.Width += deltaX;
+                GrabPoint.X += deltaX;
+                
             }
         }
 
         private void GrabRight_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             GrabPoint = new Point(e.GetPosition(this).X,e.GetPosition(this).Y);
+            this.Visibility = Visibility.Hidden;
+            Viewmodel.Editing = false;
         }
     }
 }

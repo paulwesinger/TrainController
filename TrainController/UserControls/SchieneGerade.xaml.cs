@@ -25,20 +25,20 @@ namespace TrainController.UserControls
     {
         private UserControlsVM viewmodel = new UserControlsVM();
 
-        public MouseGrabber Mousegrabber
-        {
-            get => mouseGrabber; 
-            set => mouseGrabber = value;
-        }
+        //public MouseGrabber Mousegrabber
+        //{
+        //    get => mouseGrabber; 
+        //    set => mouseGrabber = value;
+        //}
 
         private MouseGrabber mouseGrabber;
-        public UserControlsVM ViewModel 
+        public UserControlsVM ViewModel
         { 
             get => viewmodel;
             set => viewmodel = value; 
         }
         public string CtlName 
-        { 
+        {            
             get => this.Name;
             set => this.Name = value; 
         }     

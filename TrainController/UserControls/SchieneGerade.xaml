@@ -8,22 +8,25 @@
              xmlns:converter="clr-namespace:TrainController.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="20" d:DesignWidth="32"
-             Name="SchieneGerade_Horizontal"
-             >
+             Name="SchieneGerade_Horizontal"    
+             Width="{Binding CntrlWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                         
+                          >
     <UserControl.DataContext>
         <models:UserControlsVM/>
     </UserControl.DataContext>
     <UserControl.Resources>
         <converter:BoolToVisibleConverter x:Key="booltovisibleconverter"/>
     </UserControl.Resources>
-    <Grid>
+    <Grid>        
         <!--<Image x:Name="Schiene_Gerade" Source="/Images/Track_straight64x20.png"  Width="32" Height="20"/>-->
-        <Rectangle Width="{Binding CntrlWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="20" Fill="Gray" Stroke="Gray" StrokeThickness="1"/>
+        <Rectangle Width="{Binding CntrlWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                   Height="20" Fill="Gray" Stroke="Gray" StrokeThickness="1"/>
+        
         <Rectangle Width="{Binding CntrlWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" StrokeThickness="1" Stroke="Black" Fill="Black" Height="8"/>
 
-        <local:MouseGrabber Visibility="{Binding Editing, Mode=TwoWay, 
+        <!--<local:MouseGrabber Visibility="{Binding Editing, Mode=TwoWay, 
                 UpdateSourceTrigger=PropertyChanged,Converter={StaticResource booltovisibleconverter} }"
-             Width="32"/>
+             Width="{Binding CntrlWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>-->
 
     </Grid>
 </UserControl>

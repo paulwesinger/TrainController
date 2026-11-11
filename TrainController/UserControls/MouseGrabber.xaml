@@ -4,11 +4,22 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TrainController.UserControls"
+             xmlns:models="clr-namespace:TrainController.Models"
+             xmlns:converters="clr-namespace:TrainController.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="20" d:DesignWidth="32"
+             Width="{Binding CntrlWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+             x:Name="Mousegrabber"            
              >
+    <UserControl.DataContext>
+        <models:UserControlsVM/>
+    </UserControl.DataContext>
+    
     <Grid>
-        <Rectangle x:Name="GrabFrame" Fill="Transparent" Stroke="Yellow"/>
-        <Rectangle x:Name="GrabRight" Fill="Yellow" Width="8" Height="8" HorizontalAlignment="Right"/>
+        <Rectangle x:Name="GrabFrame" Fill="Transparent" Stroke="Yellow" 
+                   Width="{Binding CntrlWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Rectangle x:Name="GrabRight" Fill="Yellow" Width="8" Height="8" HorizontalAlignment="Right"
+                   PreviewMouseLeftButtonDown="GrabRight_PreviewMouseLeftButtonDown" PreviewMouseMove="GrabRight_PreviewMouseMove"
+                   PreviewMouseLeftButtonUp="GrabRight_PreviewMouseLeftButtonUp"/>
     </Grid>
 </UserControl>

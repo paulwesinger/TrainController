@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TrainController.Interfaces;
 using TrainController.Models;
 
 namespace TrainController.UserControls
@@ -20,33 +21,53 @@ namespace TrainController.UserControls
     /// <summary>
     /// Interaktionslogik für SchieneGerade.xaml
     /// </summary>
-    public partial class SchieneGerade : UserControl
+    public partial class SchieneGerade : UserControl//,IBaseControl
     {
-        private UserControlsVM usrctlmodel = new UserControlsVM();
+        private UserControlsVM viewmodel = new UserControlsVM();
 
-        public UserControlsVM CtlModel 
+        public MouseGrabber Mousegrabber
         {
-            get => usrctlmodel; 
-            set => usrctlmodel = value;
+            get => mouseGrabber; 
+            set => mouseGrabber = value;
         }
 
-
-
-        public string CtlrName()
-        {
-            return this.Name;
+        private MouseGrabber mouseGrabber;
+        public UserControlsVM ViewModel 
+        { 
+            get => viewmodel;
+            set => viewmodel = value; 
         }
+        public string CtlName 
+        { 
+            get => this.Name;
+            set => this.Name = value; 
+        }     
+
         public SchieneGerade()
         {   
             InitializeComponent();
+            viewmodel = new UserControlsVM();
+            mouseGrabber = new MouseGrabber(this,viewmodel);
            
+        }
+        public SchieneGerade(UserControlsVM model)
+        {
+
+            InitializeComponent();
+            viewmodel = model;
+            mouseGrabber = new MouseGrabber(this,model);          
         }
 
         public SchieneGerade(SchieneGerade c)
         {
+            InitializeComponent(); 
+            viewmodel = new UserControlsVM();
+            mouseGrabber = new MouseGrabber(this, viewmodel);
             this.Width = c.Width;
             this.Height = c.Height;
+           
         }
+
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
@@ -54,12 +75,12 @@ namespace TrainController.UserControls
             if (e.LeftButton == MouseButtonState.Pressed)
             {
 
-                
+
                 DataObject data = new DataObject();
                 data.SetData(DataFormats.StringFormat, SchieneGerade_Horizontal);
                 data.SetData("Width", SchieneGerade_Horizontal.Width);
                 data.SetData("Object", this); // Setzen Sie das UserControl selbst als Datenobjekt
-                data.SetData("Vm", usrctlmodel); //Model auf datalist setzen
+                data.SetData("Vm", viewmodel); //Model auf datalist setzen
 
                 DragDrop.DoDragDrop(this, data, DragDropEffects.Copy|DragDropEffects.Move);
             }

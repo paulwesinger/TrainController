@@ -22,7 +22,7 @@ namespace TrainController.Models
                 PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(nameof(Editing)));
             }
         }
-        private bool _editing = false;
+        private bool _editing = true;
 
 
         public double CntrlWidth
@@ -37,11 +37,11 @@ namespace TrainController.Models
         }
         private double _cntrlwidth = 32;
 
-        public static implicit operator UserControlsVM?(SchieneGerade? v)
-        {
-            if (v == null) return null;
+        //public static implicit operator UserControlsVM?(SchieneGerade? v)
+        //{
+        //    if (v == null) return null;
 
-            return v.CtlModel;
-        }
+        //    return v.ViewModel;
+        //}
     }
 }

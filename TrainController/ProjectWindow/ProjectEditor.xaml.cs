@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TrainController.Dialogs;
+using TrainController.Interfaces;
 using TrainController.Models;
 using TrainController.UserControls;
 
@@ -25,6 +26,15 @@ namespace TrainController.ProjectWindow
     {
         public ProjectWinVM modelProject = new ProjectWinVM();
 
+        private UserControl? currentControl = null;
+
+        public MouseGrabber? mousegrabber = null;
+
+        public Canvas canvas;
+
+        
+
+
         public int CountTracks
         {
             get => countTracks;
@@ -34,7 +44,7 @@ namespace TrainController.ProjectWindow
 
         private bool _snapToGrid = true;
 
-        Canvas canvas;
+        
         public ProjectEditor()
         { 
             DataContext= modelProject;
@@ -83,27 +93,17 @@ namespace TrainController.ProjectWindow
                // string fillColorString = (string)e.Data.GetData(DataFormats.StringFormat);
                 //double width = (double)e.Data.GetData("Width");
                 UserControl droppedControl = (UserControl)e.Data.GetData("Object");
+
+                if (droppedControl == null) return;
+
                 UserControlsVM model; //= e.Data.GetData("Vm") as SchieneGerade;
                 // Erstellen Sie eine neue Instanz des UserControls
                 UserControl? newControl = null;
-  
+                model = new UserControlsVM();
 
                 if (droppedControl is SchieneGerade)
                 {
-                    newControl = new SchieneGerade();
-
-                    model = (droppedControl as SchieneGerade).CtlModel;
-
-
-                    model.Editing = true;
-
-                    ((SchieneGerade)newControl).CtlModel = model;
-
-
-
-                    //((SchieneGerade)newControl).Schiene_Gerade.Fill = Brushes.AliceBlue; //(Brush)new BrushConverter().ConvertFromString(fillColorString);
-                    // ((SchieneGerade)newControl).Schiene_Gerade.Width = 60;       
-
+                    newControl = new SchieneGerade(model);                    
                 }
                 //else if (droppedControl is SchieneKurve)
                 //{
@@ -111,6 +111,8 @@ namespace TrainController.ProjectWindow
                 //    ((SchieneKurve)newControl).Schiene_Kurve.Fill = (Brush)new BrushConverter().ConvertFromString(fillColorString);
                 //    ((SchieneKurve)newControl).Schiene_Kurve.Width = width;
                 //}
+
+
                 if (newControl != null)
                 {
                     // Setzen Sie die Position des neuen Controls auf die Drop-Position
@@ -123,8 +125,26 @@ namespace TrainController.ProjectWindow
                     }                  
                     Canvas.SetLeft(newControl, dropPosition.X);
                     Canvas.SetTop(newControl, dropPosition.Y);
-                    // Fügen Sie das neue Control zum Canvas hinzu
+
+                    // Fügen Sie das neue Control zum Canvas hinzu                   
+
+                    // erstmal den mousegrabber für eine horizontale gerade testen => später für vertikale und bögen adaptieren
+                    // jedes schienen element kriegt seinen eigenen grabber:
+                                        
+                    mousegrabber = new MouseGrabber(newControl, model);
+
+                    ((SchieneGerade)newControl).Mousegrabber = mousegrabber;
+
+                    Canvas.SetLeft(mousegrabber, dropPosition.X);
+                    Canvas.SetTop(mousegrabber, dropPosition.Y+5);
+
+                  //  mousegrabber.Height = 20;
+                    Canvas.SetBottom(mousegrabber, 20);
+
+                    //(SchieneGerade)newControl.
                     canvas.Children.Add(newControl);
+                    canvas.Children.Add(mousegrabber);
+
                     CountTracks++;
                 }
             }
@@ -132,27 +152,30 @@ namespace TrainController.ProjectWindow
 
         private void mycanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (mycanvas.Children.Count == 0 )
-                return;                     
+           
+
+        }
+
+        private void mycanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (mycanvas.Children.Count == 0)
+                return;
 
             //var firstChild = mycanvas.Children[0];
             var ctl = mycanvas.Children.OfType<SchieneGerade>().ToList();
-            foreach(var item in ctl)
+            foreach (var item in ctl)
             {
                 if (item.IsMouseOver)
                 {
                     // Flag für Bearbeitung eines UI Elements setzensetzen
                     // ToDo: UIElement mit Punkten zum transformieren versehen
                     modelProject.EditMode = true;
-                    item.CtlModel.Editing = true;
+                    item.ViewModel.Editing = true;
+                    item.Width = 100;
+                    item.Mousegrabber.Width = 100;
+                                 
                 }
             }
-
-        }
-
-        private void mycanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-
         }
     }
 }

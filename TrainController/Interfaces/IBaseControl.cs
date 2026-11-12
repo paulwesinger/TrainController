@@ -11,7 +11,7 @@ namespace TrainController.Interfaces
     public interface IBaseControl
     {
         public string CtlName { get; set; }
-        public UserControlsVM ViewModel { get; set; }      
+        public UserControlsModel ViewModel { get; set; }      
 
     }
 }

@@ -9,7 +9,7 @@ using TrainController.UserControls;
 
 namespace TrainController.Models
 {
-    public class UserControlsVM : INotifyPropertyChanged
+    public class UserControlsModel : INotifyPropertyChanged
     { 
 
         public event PropertyChangedEventHandler? PropertyChanged;

@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using TrainController.Models;
 using TrainController.Dialogs;
 using TrainController.ProjectWindow;
+using System.Runtime.CompilerServices;
 
 namespace TrainController
 {
@@ -20,28 +21,45 @@ namespace TrainController
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainVM modelMain = new MainVM();
+
+        public static readonly DependencyProperty MainWindowViewModelProperty = 
+            DependencyProperty.Register("MainWindowViewModel", typeof(MainWinModel), typeof(MainWindow), new PropertyMetadata(null));
+
+        public  MainWinModel MainWindowViewModel
+        {
+            get { return (MainWinModel)GetValue(MainWindowViewModelProperty); }
+            set { SetValue(MainWindowViewModelProperty, value);}
+        }
+
+        public MainWinModel ModelMain;
+
         public ProjectWindow.ProjectWindow? projectWindow = null;
         public ProjectEditor? projectEditor = null;
 
-
-
-
-
         public MainWindow()
         {
-            InitializeComponent();
-            modelMain.PropertyChanged += ModelMain_PropertyChanged ;   
-            this.DataContext = modelMain;
+            InitializeComponent();           
+
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            ModelMain = new MainWinModel();
+            ModelMain.PropertyChanged += ModelMain_PropertyChanged;
+
+            ModelMain.ControlsModel = new UserControlsModel();
+            ModelMain.ProjecModel = new ProjectWinModel();
+
+            this.DataContext = ModelMain;
         }
 
 
 
         private void ModelMain_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(modelMain.EnableControls))
+            if (e.PropertyName == nameof(ModelMain.EnableControls))
             {
-                if (modelMain.NewProjectStarted)
+                if (ModelMain.NewProjectStarted)
                 {
                     this.ItemRaster.IsEnabled = true;
                 }
@@ -50,7 +68,7 @@ namespace TrainController
                     this.ItemRaster.IsEnabled = false;
                 }               
 
-                modelMain.DrawGrid();
+                ModelMain.DrawGrid();
             }
         }
 
@@ -70,13 +88,13 @@ namespace TrainController
 
         private void ShowLayer_Click(object sender, RoutedEventArgs e)
         {  
-            modelMain.ShowLayer = this.ItemRaster.IsChecked ;
+            ModelMain.ShowLayer = this.ItemRaster.IsChecked ;
 
             if (projectEditor != null)
             {
-                Models.ProjectWinVM vm = projectEditor.DataContext as ProjectWinVM;
+                Models.ProjectWinModel vm = projectEditor.DataContext as ProjectWinModel;
 
-                projectEditor.DrawRaster(modelMain.ShowLayer);
+                projectEditor.DrawRaster(ModelMain.ShowLayer);
             }
             
 
@@ -91,18 +109,20 @@ namespace TrainController
 
             if (dlgNewProject.DialogResult == true)
             {
-                modelMain.NewProjectStarted = true;
-                modelMain.EnableControls = true;                
+                ModelMain.NewProjectStarted = true;
+                ModelMain.EnableControls = true;                
 
 
-                projectEditor = new ProjectEditor();
+                projectEditor = new ProjectEditor(ModelMain);
                 projectEditor.DrawRaster(true);
                 usercontrl.Content = projectEditor;
             }
             else
             {
-                modelMain.EnableControls = false;
+                ModelMain.EnableControls = false;
             }
         }
+
+
     }
 }

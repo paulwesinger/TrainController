@@ -23,46 +23,36 @@ namespace TrainController.UserControls
     /// </summary>
     public partial class SchieneGerade : UserControl//,IBaseControl
     {
-        private UserControlsVM viewmodel = new UserControlsVM();
+        private MainWinModel model;
+
+        public MainWinModel Model
+        {
+            get { return model; }
+            set { model = value; }
+        }
 
         //public MouseGrabber Mousegrabber
         //{
         //    get => mouseGrabber; 
         //    set => mouseGrabber = value;
-        //}
-
-        private MouseGrabber mouseGrabber;
-        public UserControlsVM ViewModel
-        { 
-            get => viewmodel;
-            set => viewmodel = value; 
-        }
-        public string CtlName 
-        {            
-            get => this.Name;
-            set => this.Name = value; 
-        }     
+        //}      
+ 
 
         public SchieneGerade()
         {   
-            InitializeComponent();
-            viewmodel = new UserControlsVM();
-            mouseGrabber = new MouseGrabber(this,viewmodel);
+            InitializeComponent();                        
            
         }
-        public SchieneGerade(UserControlsVM model)
+        public SchieneGerade(MainWinModel model)
         {
 
             InitializeComponent();
-            viewmodel = model;
-            mouseGrabber = new MouseGrabber(this,model);          
+            model = model;            
         }
 
         public SchieneGerade(SchieneGerade c)
         {
-            InitializeComponent(); 
-            viewmodel = new UserControlsVM();
-            mouseGrabber = new MouseGrabber(this, viewmodel);
+            InitializeComponent();                         
             this.Width = c.Width;
             this.Height = c.Height;
            
@@ -80,7 +70,7 @@ namespace TrainController.UserControls
                 data.SetData(DataFormats.StringFormat, SchieneGerade_Horizontal);
                 data.SetData("Width", SchieneGerade_Horizontal.Width);
                 data.SetData("Object", this); // Setzen Sie das UserControl selbst als Datenobjekt
-                data.SetData("Vm", viewmodel); //Model auf datalist setzen
+             //   data.SetData("Vm", model); //Model auf datalist setzen
 
                 DragDrop.DoDragDrop(this, data, DragDropEffects.Copy|DragDropEffects.Move);
             }

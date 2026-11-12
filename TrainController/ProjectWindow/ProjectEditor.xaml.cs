@@ -24,7 +24,7 @@ namespace TrainController.ProjectWindow
     /// </summary>
     public partial class ProjectEditor : UserControl
     {
-        public ProjectWinVM modelProject = new ProjectWinVM();
+        public MainWinModel Model;
 
         private UserControl? currentControl = null;
 
@@ -45,9 +45,10 @@ namespace TrainController.ProjectWindow
         private bool _snapToGrid = true;
 
         
-        public ProjectEditor()
+        public ProjectEditor(MainWinModel model)
         { 
-            DataContext= modelProject;
+            Model = model;
+            DataContext= Model;
             InitializeComponent();
             canvas = mycanvas;           
         }
@@ -57,7 +58,7 @@ namespace TrainController.ProjectWindow
         public void DrawRaster(bool drawraster)
         {
             if (drawraster)
-                canvas.Background = modelProject.CreateDotGridBrush(modelProject.Spacing , 2, Brushes.Gray);
+                canvas.Background = Model.ProjecModel.CreateDotGridBrush(Model.ProjecModel.Spacing , 2, Brushes.Gray);
             else
                 canvas.Background = Brushes.Transparent;
         }
@@ -96,14 +97,14 @@ namespace TrainController.ProjectWindow
 
                 if (droppedControl == null) return;
 
-                UserControlsVM model; //= e.Data.GetData("Vm") as SchieneGerade;
+               
                 // Erstellen Sie eine neue Instanz des UserControls
                 UserControl? newControl = null;
-                model = new UserControlsVM();
+                
 
                 if (droppedControl is SchieneGerade)
                 {
-                    newControl = new SchieneGerade(model);                    
+                    newControl = new SchieneGerade(Model);                    
                 }
                 //else if (droppedControl is SchieneKurve)
                 //{
@@ -120,8 +121,8 @@ namespace TrainController.ProjectWindow
 
                     if (_snapToGrid)
                     {
-                        dropPosition.X = Math.Round(dropPosition.X / modelProject.Spacing) * modelProject.Spacing;
-                        dropPosition.Y = Math.Round(dropPosition.Y / modelProject.Spacing) * modelProject.Spacing;
+                        dropPosition.X = Math.Round(dropPosition.X / Model.ProjecModel.Spacing) * Model.ProjecModel.Spacing;
+                        dropPosition.Y = Math.Round(dropPosition.Y / Model.ProjecModel.Spacing) * Model.ProjecModel.Spacing;
                     }                  
                     Canvas.SetLeft(newControl, dropPosition.X);
                     Canvas.SetTop(newControl, dropPosition.Y);
@@ -131,7 +132,7 @@ namespace TrainController.ProjectWindow
                     // erstmal den mousegrabber für eine horizontale gerade testen => später für vertikale und bögen adaptieren
                     // jedes schienen element kriegt seinen eigenen grabber:
                                         
-                    mousegrabber = new MouseGrabber(newControl, model);
+                    mousegrabber = new MouseGrabber(newControl, Model);
 
                     //((SchieneGerade)newControl).Mousegrabber = mousegrabber;
                     mousegrabber.ChildCtl = ((SchieneGerade)newControl); 
@@ -171,8 +172,8 @@ namespace TrainController.ProjectWindow
                 {
                     // Flag für Bearbeitung eines UI Elements setzensetzen
                     // ToDo: UIElement mit Punkten zum transformieren versehen
-                    modelProject.EditMode = true;
-                    item.ViewModel.Editing = true;
+                    Model.ProjecModel.EditMode = true;
+                    item.Model.ControlsModel.Editing = true;
                     item.Width = 100;
                     //item.Child.Width = 100;
                                  

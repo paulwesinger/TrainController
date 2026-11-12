@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 namespace TrainController.Models
 {
-    public class ProjectWinVM : INotifyPropertyChanged
+    public class ProjectWinModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -63,7 +63,7 @@ namespace TrainController.Models
             return brush;
         }
 
-        public ProjectWinVM()
+        public ProjectWinModel()
         {
 
         }

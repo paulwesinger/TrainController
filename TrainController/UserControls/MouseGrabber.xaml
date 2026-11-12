@@ -12,7 +12,7 @@
              x:Name="Mousegrabber"            
              >
     <UserControl.DataContext>
-        <models:UserControlsVM/>
+        <models:UserControlsModel/>
     </UserControl.DataContext>
     
     <Grid>

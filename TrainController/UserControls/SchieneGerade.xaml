@@ -12,7 +12,7 @@
              Width="{Binding CntrlWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                         
                           >
     <UserControl.DataContext>
-        <models:UserControlsVM/>
+        <models:UserControlsModel/>
     </UserControl.DataContext>
     <UserControl.Resources>
         <converter:BoolToVisibleConverter x:Key="booltovisibleconverter"/>

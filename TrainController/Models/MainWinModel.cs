@@ -8,17 +8,43 @@ using System.Windows;
 
 namespace TrainController.Models
 {
-    public class MainVM : DependencyObject,INotifyPropertyChanged
+    public class MainWinModel : DependencyObject,INotifyPropertyChanged
     {
         public static readonly DependencyProperty ShowLayerProperty = DependencyProperty.Register(
-            nameof(ShowLayer), typeof(bool), typeof(MainVM), new PropertyMetadata());
+            nameof(ShowLayer), typeof(bool), typeof(MainWinModel), new PropertyMetadata());
+
+
+        /// <summary>
+        /// DependecyProperties
+        /// </summary>
+        public static readonly DependencyProperty UserControlsModelProperty = DependencyProperty.Register("ControlModel",
+            typeof(UserControlsModel), typeof(MainWinModel), new PropertyMetadata());
+
+        public static readonly DependencyProperty ProjectModelProperty = DependencyProperty.Register("ProjectModel",
+                        typeof(ProjectWinModel),typeof(MainWinModel), new PropertyMetadata());
+
+
+        public UserControlsModel ControlsModel 
+        {
+            get { return (UserControlsModel)GetValue(UserControlsModelProperty); }
+            set { SetValue(UserControlsModelProperty, value); } 
+        }
+
+        public ProjectWinModel ProjecModel
+        {
+            get { return (ProjectWinModel)GetValue(ProjectModelProperty); }
+            set { SetValue(ProjectModelProperty, value); }
+        }
+        // -----------------------------------------------------------------------------------
+
+
         public int RasterSize { 
             get => _rasterSize;
             set
             {
-                if (value < 16) // Minimum raster size is 16
+                if (value < 4) // Minimum raster size is 16
                 {
-                    throw new ArgumentOutOfRangeException(nameof(RasterSize), "Raster size must be greater than 0.");
+                    throw new ArgumentOutOfRangeException(nameof(RasterSize), "Raster size must be greater than 4.");
                 }
                 else
                 {
@@ -29,9 +55,10 @@ namespace TrainController.Models
         }
         private int _rasterSize = 64;
 
-        public bool ShowLayer {
+        public bool ShowLayer
+        {
             get => (bool)GetValue(ShowLayerProperty);
-            set             
+            set
             {
                 SetValue(ShowLayerProperty, value);
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ShowLayer)));
@@ -74,7 +101,7 @@ namespace TrainController.Models
         }
 
 
-        public MainVM()
+        public MainWinModel()
         {
             
         }

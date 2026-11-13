@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -21,10 +22,8 @@ namespace TrainController.UserControls
     /// <summary>
     /// Interaktionslogik für SchieneGerade.xaml
     /// </summary>
-    public partial class SchieneGerade : UserControl,IBaseControl
+    public partial class SchieneGerade : UserControl,IBaseControl,INotifyPropertyChanged
     {
-
-
         private MainWinModel? model;
 
         public MainWinModel? Model
@@ -46,13 +45,19 @@ namespace TrainController.UserControls
             get => ctlwidth;
             set => ctlwidth = value;
         }
-        double ctlwidth = 30;
+        double ctlwidth = 50;
         public Visibility GrabberVisibility 
         { 
             get => grabbervisibility; 
-            set => grabbervisibility = value; 
+            set
+            {
+                grabbervisibility = value;
+                PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(nameof(GrabberVisibility)));
+            }  
         }
         Visibility grabbervisibility = Visibility.Hidden;
+
+        public event PropertyChangedEventHandler? PropertyChanged;
 
 
         //public MouseGrabber Mousegrabber
@@ -64,22 +69,24 @@ namespace TrainController.UserControls
 
         public SchieneGerade()
         {   
-            InitializeComponent();                        
+            InitializeComponent();
+            DataContext = this;
            
         }
         public SchieneGerade(MainWinModel mod)
         {
 
             InitializeComponent();
+            DataContext = this;
             model = mod;            
         }
 
         public SchieneGerade(SchieneGerade c)
         {
-            InitializeComponent();                         
+            InitializeComponent();   
+            DataContext = this;
             this.Width = c.Width;
-            this.Height = c.Height;
-           
+            this.Height = c.Height;           
         }
 
 
@@ -116,6 +123,11 @@ namespace TrainController.UserControls
                 Mouse.SetCursor(Cursors.No);
             }
             e.Handled = true;
+        }
+
+        private void Rectangle_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
         }
     }
 }

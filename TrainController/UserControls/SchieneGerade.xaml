@@ -4,29 +4,31 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TrainController.UserControls"
-             xmlns:models="clr-namespace:TrainController.Models"
              xmlns:converter="clr-namespace:TrainController.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="20" d:DesignWidth="32"
+             d:DesignHeight="20" d:DesignWidth="30"
              Name="SchieneGerade_Horizontal"    
-             Width="{Binding CntrlWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"                         
+             Width="{Binding CtlWidh, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"                         
                           >
-    <UserControl.DataContext>
+    <!--<UserControl.DataContext>
         <models:UserControlsModel/>
-    </UserControl.DataContext>
-    <UserControl.Resources>
+    </UserControl.DataContext>-->
+    <!--<UserControl.Resources>
         <converter:BoolToVisibleConverter x:Key="booltovisibleconverter"/>
-    </UserControl.Resources>
-    <Grid>        
+    </UserControl.Resources>-->
+    <Grid>
         <!--<Image x:Name="Schiene_Gerade" Source="/Images/Track_straight64x20.png"  Width="32" Height="20"/>-->
-        <Rectangle Width="{Binding CntrlWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        <Rectangle
                    Height="20" Fill="Gray" Stroke="Gray" StrokeThickness="1"/>
-        
-        <Rectangle Width="{Binding CntrlWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" StrokeThickness="1" Stroke="Black" Fill="Black" Height="8"/>
 
-        <!--<local:MouseGrabber Visibility="{Binding Editing, Mode=TwoWay, 
-                UpdateSourceTrigger=PropertyChanged,Converter={StaticResource booltovisibleconverter} }"
-             Width="{Binding CntrlWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>-->
+        <Rectangle StrokeThickness="1" Stroke="Black" Fill="Black" Height="8" Margin="0,6,0,6"/>
+
+        <!--Anfasser f+r links, rechts mitte-->        
+        <Rectangle Fill="Transparent" Stroke="Yellow" PreviewMouseLeftButtonDown="Rectangle_PreviewMouseLeftButtonDown"
+                   Visibility="{Binding GrabberVisibility, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Rectangle Fill="Yellow" Height="10" Width="8" HorizontalAlignment="Left" x:Name="GrabLeft" Visibility="{Binding GrabberVisibility, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <Rectangle Fill="Yellow" Height="10" Width="8" HorizontalAlignment="Right" x:Name="GrabRight" Visibility="{Binding GrabberVisibility, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>         
+        
 
     </Grid>
 </UserControl>

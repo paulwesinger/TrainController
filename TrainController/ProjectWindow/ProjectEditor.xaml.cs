@@ -28,7 +28,7 @@ namespace TrainController.ProjectWindow
 
         private UserControl? currentControl = null;
 
-        public MouseGrabber? mousegrabber = null;
+     //   public MouseGrabber? mousegrabber = null;
 
         public Canvas canvas;
 
@@ -132,21 +132,24 @@ namespace TrainController.ProjectWindow
                     // erstmal den mousegrabber für eine horizontale gerade testen => später für vertikale und bögen adaptieren
                     // jedes schienen element kriegt seinen eigenen grabber:
                                         
-                    mousegrabber = new MouseGrabber(newControl, Model);
+                    //mousegrabber = new MouseGrabber(newControl, Model);
 
-                    //((SchieneGerade)newControl).Mousegrabber = mousegrabber;
-                    mousegrabber.ChildCtl = ((SchieneGerade)newControl); 
+                    ////((SchieneGerade)newControl).Mousegrabber = mousegrabber;
+                    //mousegrabber.ChildCtl = ((SchieneGerade)newControl); 
 
 
-                    Canvas.SetLeft(mousegrabber, dropPosition.X);
-                    Canvas.SetTop(mousegrabber, dropPosition.Y+5);
+                  //  Canvas.SetLeft(mousegrabber, dropPosition.X);
+                  //  Canvas.SetTop(mousegrabber, dropPosition.Y+5);
 
-                  //  mousegrabber.Height = 20;
-                    Canvas.SetBottom(mousegrabber, 20);
+                  ////  mousegrabber.Height = 20;
+                  //  Canvas.SetBottom(mousegrabber, 20);
 
                     //(SchieneGerade)newControl.
+                    ((SchieneGerade)newControl).GrabberVisibility = Visibility.Visible;
+                    newControl.Width = 100;
+
                     canvas.Children.Add(newControl);
-                    canvas.Children.Add(mousegrabber);
+  //                  canvas.Children.Add(mousegrabber);
 
                     CountTracks++;
                 }

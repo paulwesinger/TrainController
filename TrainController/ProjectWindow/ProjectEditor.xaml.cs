@@ -172,9 +172,9 @@ namespace TrainController.ProjectWindow
                 {
                     // Flag für Bearbeitung eines UI Elements setzensetzen
                     // ToDo: UIElement mit Punkten zum transformieren versehen
-                    Model.ProjecModel.EditMode = true;
-                    item.Model.ControlsModel.Editing = true;
-                    item.Width = 100;
+                    //Model.ProjecModel.EditMode = true;
+                   // item.Model?.ControlsModel.Editing = true;
+                   // item.Width = 100;
                     //item.Child.Width = 100;
                                  
                 }

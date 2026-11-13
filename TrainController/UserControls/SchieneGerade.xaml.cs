@@ -21,33 +21,57 @@ namespace TrainController.UserControls
     /// <summary>
     /// Interaktionslogik für SchieneGerade.xaml
     /// </summary>
-    public partial class SchieneGerade : UserControl//,IBaseControl
+    public partial class SchieneGerade : UserControl,IBaseControl
     {
-        private MainWinModel model;
 
-        public MainWinModel Model
+
+        private MainWinModel? model;
+
+        public MainWinModel? Model
         {
             get { return model; }
             set { model = value; }
         }
+
+        public string CtlName 
+        {
+            get => ctlname; 
+            set => ctlname = value; 
+        }
+        string ctlname = string.Empty;       
+
+
+        public double CtlWidh 
+        { 
+            get => ctlwidth;
+            set => ctlwidth = value;
+        }
+        double ctlwidth = 30;
+        public Visibility GrabberVisibility 
+        { 
+            get => grabbervisibility; 
+            set => grabbervisibility = value; 
+        }
+        Visibility grabbervisibility = Visibility.Hidden;
+
 
         //public MouseGrabber Mousegrabber
         //{
         //    get => mouseGrabber; 
         //    set => mouseGrabber = value;
         //}      
- 
+
 
         public SchieneGerade()
         {   
             InitializeComponent();                        
            
         }
-        public SchieneGerade(MainWinModel model)
+        public SchieneGerade(MainWinModel mod)
         {
 
             InitializeComponent();
-            model = model;            
+            model = mod;            
         }
 
         public SchieneGerade(SchieneGerade c)

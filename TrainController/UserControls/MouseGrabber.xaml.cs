@@ -128,7 +128,7 @@ namespace TrainController.UserControls
         {
             GrabPoint = new Point(e.GetPosition(this).X,e.GetPosition(this).Y);
             this.Visibility = Visibility.Hidden;
-            Model.ControlsModel.Editing = false;
+       //     Model.ControlsModel.Editing = false;
             //Viewmodel.Editing = false;
         }
     }

@@ -14,7 +14,8 @@ namespace TrainController.Models
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public double Spacing { get; set; } = 20.0;
+        public double SpacingX { get; set; } = 40.0;
+        public double SpacingY { get; set; } = 20.0;   
 
         public bool ShowRaster
         {
@@ -40,14 +41,15 @@ namespace TrainController.Models
         }
         private bool _editMode = false;
 
-        public DrawingBrush CreateDotGridBrush(double spacing, double dotRadius, Brush dotBrush)
+        public DrawingBrush CreateDotGridBrush(double spacingx,double spacingy, double dotRadius, Brush dotBrush)
         {
-            Spacing = spacing;
-            EllipseGeometry dotGeometry = new EllipseGeometry(new Point(spacing / 2, spacing / 2), dotRadius, dotRadius);
+            SpacingX = spacingx;
+            SpacingY = spacingy;
+            EllipseGeometry dotGeometry = new EllipseGeometry(new Point(spacingx , spacingy ), dotRadius, dotRadius);
 
             GeometryDrawing geometryDrawing = new GeometryDrawing(dotBrush, null, dotGeometry);
 
-            GeometryDrawing backgroundDrawing = new GeometryDrawing(Brushes.Transparent, null, new RectangleGeometry(new Rect(0, 0, spacing, spacing)));
+            GeometryDrawing backgroundDrawing = new GeometryDrawing(Brushes.Transparent, null, new RectangleGeometry(new Rect(0, 0, spacingx, spacingy)));
 
             DrawingGroup drawingGroup = new DrawingGroup();
             drawingGroup.Children.Add(backgroundDrawing);
@@ -56,7 +58,7 @@ namespace TrainController.Models
             DrawingBrush brush = new DrawingBrush(drawingGroup)
             {
                 TileMode = TileMode.Tile,
-                Viewport = new Rect(0, 0, spacing, spacing),
+                Viewport = new Rect(0, 0, spacingx, spacingy),
                 ViewportUnits = BrushMappingMode.Absolute
             };
 

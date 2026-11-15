@@ -8,27 +8,29 @@
              mc:Ignorable="d" 
              d:DesignHeight="20" d:DesignWidth="30"
              Name="SchieneGerade_Horizontal"    
-             Width="{Binding CtlWidh, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"                         
-                          >
-    <!--<UserControl.DataContext>
-        <models:UserControlsModel/>
-    </UserControl.DataContext>-->
-    <!--<UserControl.Resources>
-        <converter:BoolToVisibleConverter x:Key="booltovisibleconverter"/>
-    </UserControl.Resources>-->
+             Width="{Binding CtlWidh, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"                                                   
+             MinWidth="60"
+             MaxWidth="800"
+             >
+
     <Grid>
         <!--<Image x:Name="Schiene_Gerade" Source="/Images/Track_straight64x20.png"  Width="32" Height="20"/>-->
-        <Rectangle
-                   Height="20" Fill="Gray" Stroke="Gray" StrokeThickness="1"/>
+        <Rectangle Height="20" Fill="Gray" Stroke="Gray" StrokeThickness="1"/>
 
         <Rectangle StrokeThickness="1" Stroke="Black" Fill="Black" Height="8" Margin="0,6,0,6"/>
 
         <!--Anfasser f+r links, rechts mitte-->        
-        <Rectangle Fill="Transparent" Stroke="Yellow" PreviewMouseLeftButtonDown="Rectangle_PreviewMouseLeftButtonDown"
-                   Visibility="{Binding GrabberVisibility, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-        <Rectangle Fill="Yellow" Height="10" Width="8" HorizontalAlignment="Left" x:Name="GrabLeft" Visibility="{Binding GrabberVisibility, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-        <Rectangle Fill="Yellow" Height="10" Width="8" HorizontalAlignment="Right" x:Name="GrabRight" Visibility="{Binding GrabberVisibility, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>         
         
+        <Thumb Width="8" HorizontalAlignment="Left" Cursor="SizeWE" Background="DarkBlue" Height="10"
+               x:Name="ResizeThumbDelta"  DragDelta="ResizeThumbLeft" PreviewMouseLeftButtonDown="ResizeThumbLeftButtonDown"
+               PreviewMouseLeftButtonUp="ResizeThumb_LeftButtonUp"
+               Visibility="{Binding GrabberVisibility, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Thumb Width="8" HorizontalAlignment="Right" Cursor="SizeWE" Background="DarkBlue" Height="10"
+               x:Name="ResizeThumbDeltaRight"  DragDelta="ResizeThumbRight" PreviewMouseLeftButtonDown="ResizeThumbLeftButtonDown"
+               PreviewMouseLeftButtonUp="ResizeThumb_LeftButtonUp"
+               Visibility="{Binding GrabberVisibility, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+
 
     </Grid>
 </UserControl>

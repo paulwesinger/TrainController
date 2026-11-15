@@ -58,7 +58,7 @@ namespace TrainController.ProjectWindow
         public void DrawRaster(bool drawraster)
         {
             if (drawraster)
-                canvas.Background = Model.ProjecModel.CreateDotGridBrush(Model.ProjecModel.Spacing , 2, Brushes.Gray);
+                canvas.Background = Model.ProjecModel.CreateDotGridBrush(Model.ProjecModel.SpacingX, Model.ProjecModel.SpacingY , 2, Brushes.DarkGray);
             else
                 canvas.Background = Brushes.Transparent;
         }
@@ -91,21 +91,31 @@ namespace TrainController.ProjectWindow
             base.OnDrop(e);
             if (e.Data.GetDataPresent(DataFormats.StringFormat) && e.Data.GetDataPresent("Width") && e.Data.GetDataPresent("Object"))
             {
-               // string fillColorString = (string)e.Data.GetData(DataFormats.StringFormat);
+                // string fillColorString = (string)e.Data.GetData(DataFormats.StringFormat);
                 //double width = (double)e.Data.GetData("Width");
                 UserControl droppedControl = (UserControl)e.Data.GetData("Object");
 
                 if (droppedControl == null) return;
 
-               
+
                 // Erstellen Sie eine neue Instanz des UserControls
                 UserControl? newControl = null;
-                
 
                 if (droppedControl is SchieneGerade)
                 {
-                    newControl = new SchieneGerade(Model);                    
+                    newControl = new SchieneGerade(Model, mycanvas);
+                    ((SchieneGerade)newControl).GrabberVisibility = Visibility.Visible;
                 }
+                else
+                if (droppedControl is SiemensGeradeH)
+                {
+                    newControl = new SiemensGeradeH();
+                }
+                else
+                if (droppedControl is SiemensHtoRightUp)
+                {
+                    newControl = new SiemensHtoRightUp();
+                }           
                 //else if (droppedControl is SchieneKurve)
                 //{
                 //    newControl = new SchieneKurve();
@@ -117,39 +127,40 @@ namespace TrainController.ProjectWindow
                 if (newControl != null)
                 {
                     // Setzen Sie die Position des neuen Controls auf die Drop-Position
-                    Point dropPosition = e.GetPosition(canvas);  
+                    Point dropPosition = e.GetPosition(this.mycanvas);
 
                     if (_snapToGrid)
                     {
-                        dropPosition.X = Math.Round(dropPosition.X / Model.ProjecModel.Spacing) * Model.ProjecModel.Spacing;
-                        dropPosition.Y = Math.Round(dropPosition.Y / Model.ProjecModel.Spacing) * Model.ProjecModel.Spacing;
-                    }                  
+                        dropPosition.X = Math.Round(dropPosition.X / Model.ProjecModel.SpacingX) * Model.ProjecModel.SpacingX;
+                        dropPosition.Y = Math.Round(dropPosition.Y / Model.ProjecModel.SpacingY) * Model.ProjecModel.SpacingY;
+                    }
                     Canvas.SetLeft(newControl, dropPosition.X);
                     Canvas.SetTop(newControl, dropPosition.Y);
+                    Canvas.SetRight(newControl, dropPosition.X + 40);
+                    Canvas.SetBottom(newControl, 20);
 
                     // Fügen Sie das neue Control zum Canvas hinzu                   
 
                     // erstmal den mousegrabber für eine horizontale gerade testen => später für vertikale und bögen adaptieren
                     // jedes schienen element kriegt seinen eigenen grabber:
-                                        
+
                     //mousegrabber = new MouseGrabber(newControl, Model);
 
                     ////((SchieneGerade)newControl).Mousegrabber = mousegrabber;
                     //mousegrabber.ChildCtl = ((SchieneGerade)newControl); 
 
 
-                  //  Canvas.SetLeft(mousegrabber, dropPosition.X);
-                  //  Canvas.SetTop(mousegrabber, dropPosition.Y+5);
+                    //  Canvas.SetLeft(mousegrabber, dropPosition.X);
+                    //  Canvas.SetTop(mousegrabber, dropPosition.Y+5);
 
-                  ////  mousegrabber.Height = 20;
-                  //  Canvas.SetBottom(mousegrabber, 20);
+                    ////  mousegrabber.Height = 20;
+                    //  Canvas.SetBottom(mousegrabber, 20);
 
-                    //(SchieneGerade)newControl.
-                    ((SchieneGerade)newControl).GrabberVisibility = Visibility.Visible;
-                    newControl.Width = 100;
+                    //(SchieneGerade)newControl.                   
+                    //newControl.Width = 100;
 
                     canvas.Children.Add(newControl);
-  //                  canvas.Children.Add(mousegrabber);
+                    //                  canvas.Children.Add(mousegrabber);
 
                     CountTracks++;
                 }
@@ -182,6 +193,11 @@ namespace TrainController.ProjectWindow
                                  
                 }
             }
+        }
+
+        private void mycanvas_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
+        {
+
         }
     }
 }

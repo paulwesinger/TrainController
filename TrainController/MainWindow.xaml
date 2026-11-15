@@ -8,7 +8,7 @@
         
         Title="Train Controller" Height="450" Width="800" Loaded="Window_Loaded"
         
-        >    
+        >
     <Window.Resources>
         <Style x:Key="MenuStyle" TargetType="Menu">
             <Setter Property="Foreground" Value="Yellow"/>
@@ -22,8 +22,8 @@
             <ColumnDefinition Width="394*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="85*"/>
-            <RowDefinition Height="22*"/>
+            <RowDefinition Height="375*"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
         <Menu Style="{StaticResource MenuStyle}" Height="23" VerticalAlignment="Top" Grid.ColumnSpan="2">
             <MenuItem Header="_File">
@@ -47,7 +47,7 @@
             </MenuItem>
         </Menu>
 
-        <UserControl x:Name="usercontrl" Margin="10,28,0,10" Grid.Column="1">
+        <UserControl x:Name="usercontrl" Margin="2,30,0,0" Grid.Column="1" Grid.Row="0">
 
         </UserControl>
     </Grid>

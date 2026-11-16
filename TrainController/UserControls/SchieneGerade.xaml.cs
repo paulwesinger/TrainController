@@ -146,7 +146,7 @@ namespace TrainController.UserControls
         private void ResizeThumbLeft(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
         {       
             
-            double newwidth = this.ActualWidth + e.HorizontalChange;
+            double newwidth = this.ActualWidth - e.HorizontalChange;
             double tmp;
 
             if (model != null)
@@ -163,9 +163,16 @@ namespace TrainController.UserControls
                 Debug.WriteLine("Neue Breite " + newwidth.ToString());
 
             if (newwidth > this.MinWidth && newwidth < this.MaxWidth) 
-            {               
+            {
+
+                double left = Canvas.GetLeft(this);
+                Canvas.SetLeft(this, left+tmp);
+
+                double right = Canvas.GetRight(this);
+
+                Canvas.SetRight(this, right-e.HorizontalChange);
                 this.Width = newwidth;
-                Canvas.SetLeft(this, tmp);
+                
             }           
         }
 

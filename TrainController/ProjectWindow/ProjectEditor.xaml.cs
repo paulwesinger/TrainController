@@ -105,6 +105,11 @@ namespace TrainController.ProjectWindow
                 {
                     newControl = new SchieneGerade(Model, mycanvas);
                     ((SchieneGerade)newControl).GrabberVisibility = Visibility.Visible;
+                    //newControl.RenderTransformOrigin = new Point(0,0);
+                    //newControl.RenderTransform = new RotateTransform(45);
+
+
+
                 }
                 else
                 if (droppedControl is SiemensGeradeH)

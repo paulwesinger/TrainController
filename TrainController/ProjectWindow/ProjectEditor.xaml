@@ -7,12 +7,22 @@
              xmlns:model="clr-namespace:TrainController.Models"
              xmlns:tools="clr-namespace:TrainController.Dialogs"
              xmlns:usrctls="clr-namespace:TrainController.UserControls"             
+             xmlns:menuitems="clr-namespace:TrainController.MenuItems"
              mc:Ignorable="d" 
              Background="Black"
              d:DesignHeight="450" d:DesignWidth="800"
              MinHeight="450"
              MinWidth="800"
+             Loaded="UserControl_Loaded"
             >
+    <UserControl.Resources>
+        <model:ProjectWinModel x:Key="projectmodel"/>
+
+        <Style TargetType="{x:Type TreeViewItem}">
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+        </Style>
+    </UserControl.Resources>
 
     <Grid Margin="0,0,0,0">
         <Grid.RowDefinitions>
@@ -35,14 +45,33 @@
                 <usrctls:SchieneGerade Margin="2"/>
             </StackPanel>
             <StackPanel  Grid.Column="0" Orientation="Horizontal" Width="70" HorizontalAlignment="Left" Margin="2">
-                <usrctls:SiemensGeradeH Margin="2"/>
-                <usrctls:SiemensHtoRightUp Margin="2"/>
             </StackPanel>
-            <StackPanel  Grid.Column="0" Orientation="Horizontal" Width="70" HorizontalAlignment="Left" Margin="2">
-                <Image Source="/Images/SmallLogo.png" Width="32" Height="32" Margin="2"/>
-                <Image Source="/Images/SmallLogoCanary.png" Width="32" Height="32" Margin="2"/>
-            </StackPanel>
-        </StackPanel>
 
+            <TreeView x:Name="trvTracks" Height="200" Background="Black" Foreground="Wheat" DataContext="{DynamicResource projectmodel}">
+                <TreeView.Resources>
+                    <HierarchicalDataTemplate DataType="{x:Type menuitems:TreeviewMenuItems}" ItemsSource="{Binding Childs}">
+                        <!--<ContentPresenter Content="{Binding Child}"/>-->
+                        <TextBlock Text="{Binding Header}"/>
+                    </HierarchicalDataTemplate>                    
+                </TreeView.Resources>
+                <TreeViewItem Header="{Binding Path=Menuitems_Tracks.Header, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="White"
+                              Background="Gray"/>
+                <!--<TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type menuitems:TreeviewMenuItems}" ItemsSource="{Binding Childs}">
+                        <TextBlock Text="{Binding Header, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="White"/>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>--><!--
+                <TreeViewItem>-->
+                    
+               
+            </TreeView>
+            
+            <!--<TreeView x:Name="trvMenu">
+                <TreeView.ItemTemplate>
+                    <HierachialDataTemplate DataType="{x:Type TreeviewMenuItems}" ItemsSource="{Binding Childs}"/>
+                </TreeView.ItemTemplate>
+                
+            </TreeView>-->
+        </StackPanel>
     </Grid>
 </UserControl>

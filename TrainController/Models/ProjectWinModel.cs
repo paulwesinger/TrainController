@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using TrainController.MenuItems;
 
 namespace TrainController.Models
 {
@@ -28,6 +30,21 @@ namespace TrainController.Models
             }
         }   
         private bool _showRaster = true;
+
+        //public ObservableCollection<UIElement> TreeviewMenuItems 
+        //{ 
+        //    get => _treeviewMenuItems;
+        //    set 
+        //    { 
+        //        _treeviewMenuItems = value;
+        //        PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(nameof(TreeviewMenuItems)));
+        //    } 
+        //}
+        //private ObservableCollection<UIElement> _treeviewMenuItems = new();
+
+        //public string MenuHeader { get; set; } = "Tracks";
+
+        public TreeviewMenuItems Menuitems_Tracks { get; set; } = new TreeviewMenuItems();
 
         public bool EditMode
         {
@@ -64,10 +81,14 @@ namespace TrainController.Models
 
             return brush;
         }
+        private void CreateTrackMenu()
+        {
+
+        }
 
         public ProjectWinModel()
         {
-
+            CreateTrackMenu();
         }
 
     }

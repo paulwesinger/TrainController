@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,8 +15,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using TrainController.Dialogs;
 using TrainController.Interfaces;
+using TrainController.MenuItems;
 using TrainController.Models;
 using TrainController.UserControls;
+
 
 namespace TrainController.ProjectWindow
 {
@@ -25,15 +28,11 @@ namespace TrainController.ProjectWindow
     public partial class ProjectEditor : UserControl
     {
         public MainWinModel Model;
-
         private UserControl? currentControl = null;
 
      //   public MouseGrabber? mousegrabber = null;
 
-        public Canvas canvas;
-
-        
-
+        public Canvas canvas; 
 
         public int CountTracks
         {
@@ -48,8 +47,9 @@ namespace TrainController.ProjectWindow
         public ProjectEditor(MainWinModel model)
         { 
             Model = model;
-            DataContext= Model;
-            InitializeComponent();
+            DataContext= Model.ProjecModel;
+            InitializeComponent(); 
+            
             canvas = mycanvas;           
         }
 
@@ -203,6 +203,25 @@ namespace TrainController.ProjectWindow
         private void mycanvas_Scroll(object sender, System.Windows.Controls.Primitives.ScrollEventArgs e)
         {
 
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            TreeviewMenuItems rootitem = new TreeviewMenuItems() { Header = "Schienen"};   
+
+            
+            rootitem.Childs.Add(new SchieneGerade());
+            rootitem.Childs.Add(new SchieneGerade());
+            rootitem.Childs.Add(new SchieneGerade());
+
+            //this.trvTracks.Items.Add(rootitem);
+
+            Model.ProjecModel.Menuitems_Tracks.Header = "Tracks";//  Childs.Add(new SchieneGerade());
+            Model.ProjecModel.Menuitems_Tracks.Childs.Add(new SchieneGerade());
+            Model.ProjecModel.Menuitems_Tracks.Childs.Add(new SiemensGeradeH());
+
+            this.trvTracks.Items.Add(Model.ProjecModel.Menuitems_Tracks);
         }
     }
 }

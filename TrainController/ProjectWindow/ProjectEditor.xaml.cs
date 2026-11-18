@@ -207,21 +207,25 @@ namespace TrainController.ProjectWindow
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
+            TreeviewMenuItems item1 = new TreeviewMenuItems("Header 1", new SchieneGerade(),"Gerade");
+            TreeviewMenuItems item2 = new TreeviewMenuItems("Header 2", new SchieneGerade(), "Bogen");
 
-            TreeviewMenuItems rootitem = new TreeviewMenuItems() { Header = "Schienen"};   
 
-            
-            rootitem.Childs.Add(new SchieneGerade());
-            rootitem.Childs.Add(new SchieneGerade());
-            rootitem.Childs.Add(new SchieneGerade());
+            TreeviewMenuItems item1_1 = new TreeviewMenuItems("Header 1_1", new SchieneGerade(), "Gerade1_1");  
+            item1.Childs.Add(item1_1);
+
+            Model.ProjecModel.RootNode.Childs.Add(item1);
+            Model.ProjecModel.RootNode.Childs.Add(item2);
+
+
 
             //this.trvTracks.Items.Add(rootitem);
 
-            Model.ProjecModel.Menuitems_Tracks.Header = "Tracks";//  Childs.Add(new SchieneGerade());
-            Model.ProjecModel.Menuitems_Tracks.Childs.Add(new SchieneGerade());
-            Model.ProjecModel.Menuitems_Tracks.Childs.Add(new SiemensGeradeH());
+            //Model.ProjecModel.RootNode.Header = "Tracks";//  Childs.Add(new SchieneGerade());
+            //Model.ProjecModel.RootNode.Childs.Add(new SchieneGerade());
+            //Model.ProjecModel.RootNode.Childs.Add(new SiemensGeradeH());
 
-            this.trvTracks.Items.Add(Model.ProjecModel.Menuitems_Tracks);
+            this.trvTracks.Items.Add(Model.ProjecModel.RootNode);
         }
     }
 }

@@ -14,19 +14,29 @@ namespace TrainController.MenuItems
     {
         public TreeviewMenuItems()
         {
-            Header= string.Empty;
-            IconPath = string.Empty;
+            Header= "Leerer Header";       
+            
+            Elementlabel= "Leerer Label";
+
+            uiElement = new UIElement();
+
+            Childs = new ObservableCollection<TreeviewMenuItems>();
         }
-        public TreeviewMenuItems(string header, ObservableCollection<UIElement> childs)
+        public TreeviewMenuItems(string header,UIElement elem,string label)
         {
             Header = header;
-            IconPath = string.Empty;
-            Childs = childs;
+
+            Childs = new ObservableCollection<TreeviewMenuItems>();
+            uiElement = elem == null ? new UIElement() : elem;
+            Elementlabel = label;
+
         }
 
-        public string Header { get; set; } = "Default";
-        public string IconPath { get; set; }
+        public string Header { get; set; } 
+        public string Elementlabel { get; set; }
+        public UIElement uiElement {  get; set; }
+      
 
-        public ObservableCollection<UIElement> Childs { get; set; } = new();
+        public ObservableCollection<TreeviewMenuItems> Childs { get; set; }
     }
 }

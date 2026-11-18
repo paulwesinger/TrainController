@@ -30,7 +30,7 @@
             <RowDefinition Height="39"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="140"/>
+            <ColumnDefinition Width="160"/>
             <ColumnDefinition Width="657*"/>
         </Grid.ColumnDefinitions>
 
@@ -39,33 +39,24 @@
                 MouseLeftButtonDown="mycanvas_MouseLeftButtonDown" MouseLeftButtonUp="mycanvas_MouseLeftButtonUp"/>
         </ScrollViewer>
 
-        <StackPanel Orientation="Vertical" Margin="5,5,5,5" Background="DarkBlue">
-            <StackPanel Grid.Column="0" Orientation="Horizontal" Width="120" HorizontalAlignment="Left" Margin="2">
-                <usrctls:SchieneGerade Margin="2"/>
-                <usrctls:SchieneGerade Margin="2"/>
-            </StackPanel>
-            <StackPanel  Grid.Column="0" Orientation="Horizontal" Width="70" HorizontalAlignment="Left" Margin="2">
-            </StackPanel>
+        <StackPanel Orientation="Vertical" Margin="5,60,5,0" Background="DarkBlue" VerticalAlignment="Top" Height="346">
 
-            <TreeView x:Name="trvTracks" Height="200" Background="Black" Foreground="Wheat" DataContext="{DynamicResource projectmodel}">
-                <TreeView.Resources>
+            <TreeView x:Name="trvTracks" Height="360" Background="Black" Foreground="Wheat" DataContext="{DynamicResource projectmodel}"
+                      ItemsSource="{Binding RootNode}" Width="142" >
+                <TreeView.Resources>                    
                     <HierarchicalDataTemplate DataType="{x:Type menuitems:TreeviewMenuItems}" ItemsSource="{Binding Childs}">
-                        <!--<ContentPresenter Content="{Binding Child}"/>-->
-                        <TextBlock Text="{Binding Header}"/>
-                    </HierarchicalDataTemplate>                    
-                </TreeView.Resources>
-                <TreeViewItem Header="{Binding Path=Menuitems_Tracks.Header, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="White"
-                              Background="Gray"/>
-                <!--<TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate DataType="{x:Type menuitems:TreeviewMenuItems}" ItemsSource="{Binding Childs}">
-                        <TextBlock Text="{Binding Header, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Foreground="White"/>
+                        <!--<StackPanel Orientation="Vertical">
+                            <TextBox Text="{Binding Header}"/>-->
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Elementlabel}" Foreground="AliceBlue" HorizontalAlignment="Left"/>
+                                <ContentControl Content="{Binding uiElement}" Height="20"/>
+                            </StackPanel>
+                        <!--</StackPanel>-->
                     </HierarchicalDataTemplate>
-                </TreeView.ItemTemplate>--><!--
-                <TreeViewItem>-->
-                    
-               
+                </TreeView.Resources> 
             </TreeView>
-            
+
+            <TextBox Text="Root" Foreground="Yellow"/>
             <!--<TreeView x:Name="trvMenu">
                 <TreeView.ItemTemplate>
                     <HierachialDataTemplate DataType="{x:Type TreeviewMenuItems}" ItemsSource="{Binding Childs}"/>

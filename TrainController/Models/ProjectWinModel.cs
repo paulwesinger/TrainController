@@ -44,7 +44,14 @@ namespace TrainController.Models
 
         //public string MenuHeader { get; set; } = "Tracks";
 
-        public TreeviewMenuItems RootNode { get; set; } = new TreeviewMenuItems();
+        // Für Treeview
+        public TreeviewMenuItems RootNode { get; set; } = new TreeviewMenuItems("Header",null,"Root");
+
+
+        // Test mit Listview:
+        public List<MenuObjects> Menuobjects { get; set; } = new List<MenuObjects>();
+
+
 
         public bool EditMode
         {

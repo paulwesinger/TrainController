@@ -30,39 +30,75 @@
             <RowDefinition Height="39"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="160"/>
-            <ColumnDefinition Width="657*"/>
+            <ColumnDefinition Width="321*"/>
+            <ColumnDefinition Width="479*"/>
         </Grid.ColumnDefinitions>
 
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1">
             <Canvas x:Name="mycanvas" Grid.Column="1" Visibility="Visible"  AllowDrop="True"
                 MouseLeftButtonDown="mycanvas_MouseLeftButtonDown" MouseLeftButtonUp="mycanvas_MouseLeftButtonUp"/>
-        </ScrollViewer>
+        </ScrollViewer>      
 
-        <StackPanel Orientation="Vertical" Margin="5,60,5,0" Background="DarkBlue" VerticalAlignment="Top" Height="346">
-
-            <TreeView x:Name="trvTracks" Height="360" Background="Black" Foreground="Wheat" DataContext="{DynamicResource projectmodel}"
-                      ItemsSource="{Binding RootNode}" Width="142" >
-                <TreeView.Resources>                    
+            <!--<TreeView x:Name="trvTracks" Height="346" Background="Black" Foreground="Wheat" DataContext="{DynamicResource projectmodel}"
+                      ItemsSource="{Binding RootNode}" Width="141" HorizontalAlignment="Left" >
+                <TreeView.Resources>
                     <HierarchicalDataTemplate DataType="{x:Type menuitems:TreeviewMenuItems}" ItemsSource="{Binding Childs}">
-                        <!--<StackPanel Orientation="Vertical">
-                            <TextBox Text="{Binding Header}"/>-->
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Elementlabel}" Foreground="AliceBlue" HorizontalAlignment="Left"/>
-                                <ContentControl Content="{Binding uiElement}" Height="20"/>
-                            </StackPanel>
-                        <!--</StackPanel>-->
+                        --><!--<StackPanel Orientation="Vertical">
+                            <TextBox Text="{Binding Header}"/>--><!--
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="80"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="22"/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="{Binding Elementlabel}" Foreground="AliceBlue" HorizontalAlignment="Left" Grid.Column="0"/>
+                            <ContentControl Content="{Binding uiElement}" Height="20" Grid.Column="1" HorizontalAlignment="Center"/>
+                        </Grid>
+                        --><!--</StackPanel>--><!--
                     </HierarchicalDataTemplate>
-                </TreeView.Resources> 
-            </TreeView>
-
-            <TextBox Text="Root" Foreground="Yellow"/>
-            <!--<TreeView x:Name="trvMenu">
-                <TreeView.ItemTemplate>
-                    <HierachialDataTemplate DataType="{x:Type TreeviewMenuItems}" ItemsSource="{Binding Childs}"/>
-                </TreeView.ItemTemplate>
-                
+                </TreeView.Resources>
             </TreeView>-->
-        </StackPanel>
+            <ListView Height="395" ItemsSource="{Binding Menuobjects}" x:Name="lvMenu">
+            <ListView.DataContext >
+                <model:ProjectWinModel></model:ProjectWinModel>
+            </ListView.DataContext>
+            <ListView.Resources>
+                <DataTemplate DataType="{x:Type menuitems:MenuObjects}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition Width="120"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox Text="{Binding TextElement}"/>
+                        <ContentControl Content="{Binding ControlElement}"/>
+                    </Grid>
+                    
+                    
+                </DataTemplate>
+            <!--     <DataTemplate DataType="{x:Type menuitems:MenuObjects}">
+                    <DataGridColumnHeader>
+                        <Grid >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Text="{Binding TextElement}" Foreground="Wheat" Background="DimGray" Grid.Column="0"/>
+                            <TextBox Text="Element"/>
+                        </Grid>                     
+                    </DataGridColumnHeader>
+                </DataTemplate>-->
+            </ListView.Resources>
+            <ListView.View>                           
+
+                    <GridView>
+                        <GridViewColumn Header="Auswahl" Width="120" DisplayMemberBinding="{Binding TextElement}"/>
+                        <GridViewColumn Header="Object" Width="150" DisplayMemberBinding="{Binding ControlElement}"/>
+
+                </GridView>
+                </ListView.View>
+            </ListView>          
+      
     </Grid>
 </UserControl>
